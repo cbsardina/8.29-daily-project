@@ -1,0 +1,25 @@
+<div class="mainProfile">
+  <img class="picBig" src="{{avatar}}" alt="User Picture">
+  <div class="about">
+    <h1>{{name}}</h1>
+    <p>{{address.city}} {{address.country}} | {{job}} {{company}}
+    {{^company}}<span class="unemployed">Available for hire</span>{{/company}}</p>
+    <p>{{email}} | {{phone}}</p>
+  </div>
+</div>
+<div class="edAndSkill">
+  <div class="edu">
+    {{#university}}
+      <h3>Education</h3>
+    {{/university}}
+    <p>{{university}}</p>
+  </div>
+  <div class="info">
+    <h3>Skills</h3>
+    <ul>
+      {{#skills}}
+      <li>{{.}}</li>
+      {{/skills}}
+    </ul>
+  </div>
+</div>

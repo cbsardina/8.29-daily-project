@@ -1,0 +1,95 @@
+.container {
+  margin: 1em auto;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+}
+.roboIndx {
+  margin: 1em auto;
+  padding: .5em;
+  border: 3px solid #000;
+  width: 22%;
+}
+.picSml {
+  height: 9em;
+  width: 7em;
+  display: flex;
+  margin: 1em auto;
+}
+h3 {
+  color: blue;
+  margin: 1em;
+}
+.small {
+  margin: 1em;
+}
+.unemployed {
+  color: red;
+  font-weight: 600;
+  margin: 1em;
+}
+.mainProfile {
+  width: 60%;
+  margin: 2em auto;
+  padding: 2em;
+  padding-left: 4em;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  margin-bottom: 0;
+}
+.picBig {
+  border: 1px solid gray;
+  border-radius: 50%;
+  display: flex;
+}
+.about {
+  display: flex;
+  justify-content: flex-start;
+  flex-flow: column;
+  margin-left: 2em;
+}
+.edAndSkill {
+  width: 60%;
+  margin: 0 auto;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+.edu {
+  width: 44%;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+}
+.edu p {
+  margin-bottom: 12px;
+}
+
+.info {
+  width: 44%;
+  display: flex;
+  flex-flow: row;
+  /*align-items: flex-start;*/
+}
+.edu h3, .info h3 {
+  color: #000;
+}
+
+ul {
+  list-style: none;
+  margin-top: 18px;
+  margin-left: 0;
+}
+a {
+  color:inherit;
+  text-decoration: none;
+}
+
+
+
+
+
+
+
+/*----- fin -----*/

@@ -1,0 +1,20 @@
+{
+  "name": "8.15-daily-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dal.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.4",
+    "mongodb": "^2.2.31",
+    "mustache": "^2.3.0",
+    "mustache-express": "^1.2.5",
+    "nodeman": "^1.1.2"
+  }
+}
