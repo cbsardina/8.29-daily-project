@@ -2,6 +2,7 @@
 
 const express = require('express')
 const app = express();
+const bodyParser = require('body-parser')
 const mustacheExpress = require('mustache-express')
 const roboDal = require('./dal');
 
@@ -13,8 +14,12 @@ app.set('views', __dirname + '/views');
 //set up 'public' directory for styles.css
 app.use(express.static('public'));
 
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
+
 //======================================
-app.get('/index', function(request, response) {
+
+app.get('/', function(request, response) {
   const robos = roboDal.getRobots();
   response.render('index', {robos: robos});
 })
@@ -32,5 +37,5 @@ app.get('/index/:id', function (request, response) {
 app.set('port', 3000);
 
 app.listen(app.get('port'), function () {
-  console.log('Application has started at port 3000')
+  console.log('Application has started at port 3010')
 });
