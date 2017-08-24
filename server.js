@@ -17,36 +17,56 @@ app.use(express.static('public'));
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
-//======================================
+//============== ROUTES ========================
 
+// ------------- ALL ROBOTS --------------------------
 app.get('/', function(request, response) {
   const robos = roboDal.getRobots();
   response.render('index', {robos});
 })
 
+// ------------ FULL ROBOT PROFILE ------------------------
 app.get('/index/:id', function (request, response) {
   const oneRobot = roboDal.getRobot(parseInt(request.params.id, 10));
   if (oneRobot.id) {
     response.render('oneRobo', oneRobot)
-  } else {
-    response.send('THERE ARE ONLY 50 ROBOTS!!')
   }
 })
+
 // ---------- JOB SEEKERS ----------------------
 app.get('/job_seekers', (request, response) =>{
-  const dobos = roboDal.getUnemployed();          //temporary to check the page
-  response.render('unemployed', {dobos});
+  const roboUnemp = roboDal.getUnemployed();
+  response.render('unemployed', {roboUnemp});
 })
 
 // ------------- EMPLOYED -----------------------
 app.get('/employed', (request, response) =>{
-  const lobos = roboDal.getEmployed();          //temporary to check the page
-  response.render('employed', {lobos});
+  const roboEmp = roboDal.getEmployed();
+  response.render('employed', {roboEmp});
 })
 
-//=====================================
+
+//============ SET PORT =========================
 app.set('port', 3000);
 
 app.listen(app.get('port'), function () {
-  console.log('Application has started at port 3010')
+  console.log('Application has started at port 3000')
 });
+
+
+
+
+// ================== NOT BEING USED========================
+//
+// // ------------- FIND by COUNTRY --------------------
+// app.get('/index/:country', function (request, response) {
+//   const roboCountry = roboDal.getRoboByCountry(request.params.country);
+//     response.render('country', {roboCountry})
+// })
+//
+// // -------------- FIND by SKILLS --------------------
+// app.get('/skills/:.', function (request, response) {
+//   const roboSkills = roboDal.getRoboBySkill(request.params.skills);
+//     response.render('skills', {roboSkills})
+// })
+// ^^^^^^^^^^^^^^^^^ NOT BEING USED ^^^^^^^^^^^^^^^^^^^^^^^^^^

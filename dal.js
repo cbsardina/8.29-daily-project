@@ -6,6 +6,7 @@ const url = 'mongodb://localhost:27017/robotdb';
 let robots = [];
 let unemployedRobots = [];
 let employedRobots = [];
+let botsByCountry = [];
 
 //to connect to the server
 function connectToMongodb (url, cb) {       //to connect to server, requires a callback
@@ -21,9 +22,9 @@ function getRobots () {
 
 function findRobos (err, db) {
   console.log('error 1:' + err);
-  // Get the documents collection
+  // Get the robots collection from robotsdb database. Assign to var 'collection'
   let collection = db.collection('robots');
-  // Find each robot object/document
+  // Find each robot object/document in robots collection, assign to documents which assigns robots.
   let documents = [];
   collection.find({}).toArray(function(err, docs) {
     console.log('error 2:' + err);
@@ -45,13 +46,11 @@ function getRobot (roboId) {
 
 //  ---------- filters for unemployed robots -------------
 function findUnemployedRobos (err, db) {
-  console.log('error 1:' + err);
+        console.log('error 1:' + err);
   let collection = db.collection('robots');
   let documents = [];
   collection.find({job: null}).toArray(function(err, docs) {
     unemployedRobots = docs;
-    console.log("unemployed robots: ");
-    console.log(unemployedRobots);
     db.close();
   });
 }
@@ -68,8 +67,6 @@ function findEmployedRobos (err, db) {
   let documents = [];
   collection.find({job: {$not: {$in: [null]}}}).toArray(function(err, docs) {
     employedRobots = docs;
-    console.log("employedRobots: ");
-    console.log(employedRobots);
     db.close();
   });
 }
@@ -79,9 +76,29 @@ function getEmployed () {
     return employedRobots;
 }
 
+// ---------- find robots by country NOT BEING USED  -----------------
+// function findRoboByCountry (err, db, home) {
+//   console.log('error 1:' + err);
+//   let collection = db.collection('robots');
+//   let documents = [];
+//   collection.find({"address.country": "Canada"}).toArray(function(err, docs) {
+//     botsByCountry = docs;
+//     console.log("===== botsByCountry below =====");
+//     console.log(botsByCountry);
+//     db.close();
+//   });
+// }
+//
+// function getRoboByCountry () {
+//   connectToMongodb(url, findRoboByCountry)
+//     return botsByCountry;
+// }
+
+
 module.exports = {
   getRobots: getRobots,
   getRobot: getRobot,
   getUnemployed: getUnemployed,
-  getEmployed: getEmployed
+  getEmployed: getEmployed,
+  // getRoboByCountry: getRoboByCountry
 }

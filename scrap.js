@@ -1,3 +1,6 @@
+// FROM MONGODB DOCUMENTATION
+
+
 var MongoClient = require('mongodb').MongoClient
 
 // Connection URL

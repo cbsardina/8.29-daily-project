@@ -2,7 +2,7 @@
   <img class="picBig" src="{{avatar}}" alt="User Picture">
   <div class="about">
     <h1>{{name}}</h1>
-    <p>{{address.city}} {{address.country}} | {{job}} {{company}}
+    <p>{{address.city}} <a href="/country/{{address.country}}">{{address.country}}</a> | {{job}} {{company}}
     {{^company}}<span class="unemployed">Available for hire</span>{{/company}}</p>
     <p>{{email}} | {{phone}}</p>
   </div>
@@ -18,7 +18,7 @@
     <h3>Skills</h3>
     <ul>
       {{#skills}}
-      <li>{{.}}</li>
+      <li><a href="/skills/{{.}}">{{.}}</a></li>
       {{/skills}}
     </ul>
   </div>
