@@ -4,6 +4,8 @@
 const MongoClient = require('mongodb').MongoClient;
 const url = 'mongodb://localhost:27017/robotdb';
 let robots = [];
+let unemployedRobots = [];
+let employedRobots = [];
 
 //to connect to the server
 function connectToMongodb (url, cb) {       //to connect to server, requires a callback
@@ -42,12 +44,44 @@ function getRobot (roboId) {
 }
 
 //  ---------- filters for unemployed robots -------------
+function findUnemployedRobos (err, db) {
+  console.log('error 1:' + err);
+  let collection = db.collection('robots');
+  let documents = [];
+  collection.find({job: null}).toArray(function(err, docs) {
+    unemployedRobots = docs;
+    console.log("unemployed robots: ");
+    console.log(unemployedRobots);
+    db.close();
+  });
+}
 
-
+function getUnemployed () {
+  connectToMongodb(url, findUnemployedRobos)
+    return unemployedRobots;
+}
 
 // ---------- filters for employed robots -----------------
+function findEmployedRobos (err, db) {
+  console.log('error 1:' + err);
+  let collection = db.collection('robots');
+  let documents = [];
+  collection.find({job: {$not: {$in: [null]}}}).toArray(function(err, docs) {
+    employedRobots = docs;
+    console.log("employedRobots: ");
+    console.log(employedRobots);
+    db.close();
+  });
+}
+
+function getEmployed () {
+  connectToMongodb(url, findEmployedRobos)
+    return employedRobots;
+}
 
 module.exports = {
   getRobots: getRobots,
-  getRobot: getRobot
+  getRobot: getRobot,
+  getUnemployed: getUnemployed,
+  getEmployed: getEmployed
 }

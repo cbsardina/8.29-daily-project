@@ -85,6 +85,16 @@ a {
   color:inherit;
   text-decoration: none;
 }
+header {
+  padding: 2em 0;
+  background-color: #C5C5E1;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+header ul {
+  margin-top: 0;
+}
 
 
 

@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 app.get('/', function(request, response) {
   const robos = roboDal.getRobots();
-  response.render('index', {robos: robos});
+  response.render('index', {robos});
 })
 
 app.get('/index/:id', function (request, response) {
@@ -31,6 +31,17 @@ app.get('/index/:id', function (request, response) {
   } else {
     response.send('THERE ARE ONLY 50 ROBOTS!!')
   }
+})
+// ---------- JOB SEEKERS ----------------------
+app.get('/job_seekers', (request, response) =>{
+  const dobos = roboDal.getUnemployed();          //temporary to check the page
+  response.render('unemployed', {dobos});
+})
+
+// ------------- EMPLOYED -----------------------
+app.get('/employed', (request, response) =>{
+  const lobos = roboDal.getEmployed();          //temporary to check the page
+  response.render('employed', {lobos});
 })
 
 //=====================================

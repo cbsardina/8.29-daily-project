@@ -4,20 +4,20 @@
     <meta charset="utf-8">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="./styles.css">
-    <title>Index</title>
+    <title>Employed Robots</title>
   </head>
   <body>
     <header>
       <ul class="nav nav-pills">
-        <li class="active"><a href="/">Home</a></li>
+        <li><a href="/">Home</a></li>
         <li><a href="/job_seekers">Job Seekers</a></li>
-        <li><a href="/employed">Currently Employed</a></li>
+        <li class="active"><a href="/employed">Currently Employed</a></li>
       </ul>
     </header>
     <div class="container">
-      {{#robos}}
+      {{#lobos}}
         {{>_roboIndex}}
-      {{/robos}}
+      {{/lobos}}
     </div>
   </body>
 </html>
