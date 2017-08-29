@@ -15,23 +15,24 @@ function connectToMongodb (url, cb) {       //to connect to server, requires a c
 }
 
 // ---------- getRobots from DB ----------
-function getRobots () {
-  connectToMongodb(url, findRobos)
+function getAllRobots () {
+  getRobots(url)
     return robots;
 }
-
-function findRobos (err, db) {
-  console.log('error 1:' + err);
-  // Get the robots collection from robotsdb database. Assign to var 'collection'
-  let collection = db.collection('robots');
-  // Find each robot object/document in robots collection, assign to documents which assigns robots.
-  let documents = [];
-  collection.find({}).toArray(function(err, docs) {
-    console.log('error 2:' + err);
-    robots = docs;
-    db.close();
-  });
+function getRobots () {
+  return new Promise((resolve, reject) => {             //with promise but still have to double load
+    MongoClient.connect(url, function (err, db) {
+      console.log(db)
+      const collection = db.collection('robots')
+      collection.find({}).toArray(function (err, docs) {
+        resolve(docs)
+        robots = docs;
+        reject(err)
+      })
+    })
+  })
 }
+
 
 // ---------- getRobot --> get 1 robot for full page ----------
 function getRobot (roboId) {
@@ -76,29 +77,11 @@ function getEmployed () {
     return employedRobots;
 }
 
-// ---------- find robots by country NOT BEING USED  -----------------
-// function findRoboByCountry (err, db, home) {
-//   console.log('error 1:' + err);
-//   let collection = db.collection('robots');
-//   let documents = [];
-//   collection.find({"address.country": "Canada"}).toArray(function(err, docs) {
-//     botsByCountry = docs;
-//     console.log("===== botsByCountry below =====");
-//     console.log(botsByCountry);
-//     db.close();
-//   });
-// }
-//
-// function getRoboByCountry () {
-//   connectToMongodb(url, findRoboByCountry)
-//     return botsByCountry;
-// }
-
 
 module.exports = {
-  getRobots: getRobots,
-  getRobot: getRobot,
-  getUnemployed: getUnemployed,
-  getEmployed: getEmployed,
-  // getRoboByCountry: getRoboByCountry
+  getAllRobots,
+  getRobot,
+  getUnemployed,
+  getEmployed,
+
 }

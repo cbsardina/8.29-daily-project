@@ -87,7 +87,7 @@ a {
 }
 header {
   padding: 2em 0;
-  background-color: #C5C5E1;
+  background-color: #69809E;
   margin: 0 auto;
   display: flex;
   justify-content: center;
@@ -96,8 +96,68 @@ header ul {
   margin-top: 0;
 }
 
+/*FOR REGISTER PAGE*/
+.signupSection {
+  margin: 1em auto;
+  width: 80%;
+  padding: 2em;
+  background-color: #69809E;
+}
+.signupSection form {
+  padding: 2em;
+  background-color: #D3D9E1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
+/*----- LOGIN SECTION -----*/
+.loginSection {
+  margin: 1em auto;
+  width: 80%;
+  padding: 2em;
+  background-color: #69809E;
+}
+.loginSection form {
+  padding: 2em;
+  background-color: #D3D9E1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
+/*----- LOGOUT ------*/
+.logout {
+  color: red;
+}
+
+/*----- INPUT -------*/
+input {
+  margin: 1em;
+  font-size: 1em;
+  padding: .5em;
+  width: 30%;
+}
+
+/*-------- BUTTON ----------*/
+button {
+  font-size: 1.25em;
+  color: #fff;
+  background-color: #69809E;
+  border: none;
+  padding: .5em .75em;
+  border-radius: 10px;
+}
+button:focus {
+  outline: none;
+}
+button:hover {
+  background-color: #D3D9E1;
+  color: #000;
+}
+button:active {
+  background-color: green;
+}
 
 
 

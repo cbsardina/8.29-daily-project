@@ -4,7 +4,8 @@ const express = require('express')
 const app = express();
 const bodyParser = require('body-parser')
 const mustacheExpress = require('mustache-express')
-const roboDal = require('./dal');
+const session = require('express-session')
+const dal = require('./dal');
 
 // Register '.mustache' extension with The Mustache Express
 app.engine('mustache', mustacheExpress());
@@ -14,42 +15,84 @@ app.set('views', __dirname + '/views');
 //set up 'public' directory for styles.css
 app.use(express.static('public'));
 
+//bodyParser
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
+
+//session
+app.use(
+  session({
+    secret: 'puppy monkey baby',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: null }
+  }))
+
+// verify login
+function isLoggedIn(req, res, next) {
+  if(req.session.usr) {
+    next();
+  }
+  else {
+    res.render('sorry');
+  }
+}
+
 
 //============== ROUTES ========================
 
 // ------------- ALL ROBOTS --------------------------
-app.get('/', function(request, response) {
-  const robos = roboDal.getRobots();
-  response.render('index', {robos});
+app.get('/',(req, res)  => {
+  const robos = dal.getAllRobots();
+  res.render('index', {robos});
 })
 
 // ------------ FULL ROBOT PROFILE ------------------------
-app.get('/index/:id', function (request, response) {
-  const oneRobot = roboDal.getRobot(parseInt(request.params.id, 10));
+app.get('/index/:id', (req, res) => {
+  const oneRobot = dal.getRobot(parseInt(req.params.id, 10));
   if (oneRobot.id) {
-    response.render('oneRobo', oneRobot)
+    res.render('oneRobo', oneRobot)
   }
 })
 
 // ---------- JOB SEEKERS ----------------------
-app.get('/job_seekers', (request, response) =>{
-  const roboUnemp = roboDal.getUnemployed();
-  response.render('unemployed', {roboUnemp});
+app.get('/job_seekers', (req, res) => {
+  const roboUnemp = dal.getUnemployed();
+  res.render('unemployed', {roboUnemp});
 })
 
 // ------------- EMPLOYED -----------------------
-app.get('/employed', (request, response) =>{
-  const roboEmp = roboDal.getEmployed();
-  response.render('employed', {roboEmp});
+app.get('/employed', (req, res) => {
+  const roboEmp = dal.getEmployed();
+  res.render('employed', {roboEmp});
 })
 
+// ------------- LOGIN -----------------------
+app.get('/login', (req, res) => {
+  res.render('login');
+})
+
+// ------------- REGISTER -----------------------
+app.get('/register', (req, res) =>{
+  res.render('register');
+})
+
+// ------------- EDIT -----------------------
+app.get('/edit_profile', (req, res) =>{
+  res.render('edit_profile');
+})
+
+// ----- /LOGOUT -----
+app.get('/logout', (req, res) => {
+  req.session.destroy(() => {
+    res.redirect('/');
+  })
+})
 
 //============ SET PORT =========================
 app.set('port', 3000);
 
-app.listen(app.get('port'), function () {
+app.listen(app.get('port'), () => {
   console.log('Application has started at port 3000')
 });
 
