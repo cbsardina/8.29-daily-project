@@ -47,10 +47,6 @@ function isLoggedIn(req, res, next) {
 //============== ROUTES ========================
 
 // ------------- ALL ROBOTS --------------------------
-// app.get('/',(req, res)  => {
-//   const robos = dal.getAllRobots();
-//   res.render('index', {robos});
-// })
 app.get('/', (req, res) => {
   getAllRobots().then(function(robos) {
     res.render('index', {robos})
@@ -58,23 +54,25 @@ app.get('/', (req, res) => {
 })
 
 // ------------ FULL ROBOT PROFILE ------------------------
-app.get('/index/:id', (req, res) => {
-  const oneRobot = dal.getRobot(parseInt(req.params.id, 10));
-  if (oneRobot.id) {
-    res.render('oneRobo', oneRobot)
-  }
+app.get('/index/:roboId', (req, res) => {
+  const roboId = parseInt(req.params.roboId, 10)
+  getRobot(roboId).then(function(aRobot) {
+    res.render('oneRobo', aRobot[0])
+  })
 })
 
 // ---------- JOB SEEKERS ----------------------
 app.get('/job_seekers', (req, res) => {
-  const roboUnemp = dal.getUnemployed();
-  res.render('unemployed', {roboUnemp});
+  getUnemployed().then(function(roboUnemp) {
+    res.render('unemployed', {roboUnemp});
+  })
 })
 
 // ------------- EMPLOYED -----------------------
 app.get('/employed', (req, res) => {
-  const roboEmp = dal.getEmployed();
-  res.render('employed', {roboEmp});
+  getEmployed().then(function(roboEmp) {
+      res.render('employed', {roboEmp});
+  })
 })
 
 // ------------- LOGIN -----------------------
