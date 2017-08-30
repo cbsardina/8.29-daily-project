@@ -1,12 +1,19 @@
 //////////// DAL.js ///////////////
 ///////////////////////////////////
 
-const MongoClient = require('mongodb').MongoClient;
-const url = 'mongodb://localhost:27017/robotdb';
-let robots = [];
-let unemployedRobots = [];
-let employedRobots = [];
-let botsByCountry = [];
+const mongoose = require('mongoose')
+const Robot = require('./model')
+mongoose.Promise = require('bluebird')
+mongoose.connect('mongodb://localhost:27017/robotdb', {
+  useMongoClient: true
+})
+
+// const MongoClient = require('mongodb').MongoClient;
+// const url = 'mongodb://localhost:27017/robotdb'
+// let robots = [];
+// let unemployedRobots = [];
+// let employedRobots = [];
+// let botsByCountry = [];
 
 //to connect to the server
 function connectToMongodb (url, cb) {       //to connect to server, requires a callback
@@ -16,8 +23,9 @@ function connectToMongodb (url, cb) {       //to connect to server, requires a c
 
 // ---------- getRobots from DB ----------
 function getAllRobots () {
-  getRobots(url)
-    return robots;
+  return Robot.find()
+  // getRobots(url)
+  //   return robots;
 }
 function getRobots () {
   return new Promise((resolve, reject) => {             //with promise but still have to double load

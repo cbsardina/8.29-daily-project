@@ -5,7 +5,12 @@ const app = express();
 const bodyParser = require('body-parser')
 const mustacheExpress = require('mustache-express')
 const session = require('express-session')
-const dal = require('./dal');
+const {
+  getAllRobots,
+  getRobot,
+  getUnemployed,
+  getEmployed
+} = require('./dal');
 
 // Register '.mustache' extension with The Mustache Express
 app.engine('mustache', mustacheExpress());
@@ -42,9 +47,14 @@ function isLoggedIn(req, res, next) {
 //============== ROUTES ========================
 
 // ------------- ALL ROBOTS --------------------------
-app.get('/',(req, res)  => {
-  const robos = dal.getAllRobots();
-  res.render('index', {robos});
+// app.get('/',(req, res)  => {
+//   const robos = dal.getAllRobots();
+//   res.render('index', {robos});
+// })
+app.get('/', (req, res) => {
+  getAllRobots().then(function(robos) {
+    res.render('index', {robos})
+  })
 })
 
 // ------------ FULL ROBOT PROFILE ------------------------
