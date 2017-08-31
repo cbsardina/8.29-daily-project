@@ -7,41 +7,53 @@ const mustacheExpress = require('mustache-express')
 const session = require('express-session')
 const {
   getAllRobots,
-  getRobot,
+  findById,
   getUnemployed,
-  getEmployed
+  getEmployed,
+  findByUsername,
+  addRobot,
+  updateRobot
 } = require('./dal');
+const Robot = require('./model')
+const passport = require('passport')
+const MongoStore = require('connect-mongo')(session)
+
+//set up 'public' directory for styles.css
+app.use(express.static('public'));
+
+//session
+app.use(
+  session({
+    secret: 'puppy monkey baby',
+    resave: true,
+    saveUninitialized: true,
+    store: new MongoStore({
+      url: 'mongodb://localhost:27017/sesh',
+      autoReconnect: true,
+      clear_interval: 4000
+    })
+  }))
+app.use(passport.initialize())
+app.use(passport.session())
 
 // Register '.mustache' extension with The Mustache Express
 app.engine('mustache', mustacheExpress());
 app.set('view engine', 'mustache');
 app.set('views', __dirname + '/views');
 
-//set up 'public' directory for styles.css
-app.use(express.static('public'));
-
 //bodyParser
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
-//session
-app.use(
-  session({
-    secret: 'puppy monkey baby',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { maxAge: null }
-  }))
-
 // verify login
-function isLoggedIn(req, res, next) {
-  if(req.session.usr) {
-    next();
-  }
-  else {
-    res.render('sorry');
-  }
-}
+// function isLoggedIn(req, res, next) {
+//   if(req.session.usr) {
+//     next();
+//   }
+//   else {
+//     res.render('sorry');
+//   }
+// }
 
 
 //============== ROUTES ========================
@@ -49,14 +61,15 @@ function isLoggedIn(req, res, next) {
 // ------------- ALL ROBOTS --------------------------
 app.get('/', (req, res) => {
   getAllRobots().then(function(robos) {
+    console.log(req.session.id);
     res.render('index', {robos})
   })
 })
 
 // ------------ FULL ROBOT PROFILE ------------------------
-app.get('/index/:roboId', (req, res) => {
-  const roboId = parseInt(req.params.roboId, 10)
-  getRobot(roboId).then(function(aRobot) {
+app.get('/index/:id', (req, res) => {
+  const roboId = parseInt(req.params.id, 10)
+  findById(roboId).then(function(aRobot) {
     res.render('oneRobo', aRobot[0])
   })
 })
@@ -80,14 +93,21 @@ app.get('/login', (req, res) => {
   res.render('login');
 })
 
-// ------------- REGISTER -----------------------
-app.get('/register', (req, res) =>{
+// ------------- REGISTER/ADD -----------------------
+app.get('/register', (req, res) => {
   res.render('register');
 })
 
+app.post('/register', (req, res) => {
+  addRobot(req.body).then(function() {
+    res.render('edit_profile')
+  })
+})
+
+
 // ------------- EDIT -----------------------
-app.get('/edit_profile', (req, res) =>{
-  res.render('edit_profile');
+app.get('/edit_profile', (req, res) => {
+      res.render('edit_profile')
 })
 
 // ----- /LOGOUT -----

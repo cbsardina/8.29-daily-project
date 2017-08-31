@@ -16,8 +16,15 @@ function getAllRobots () {
 }
 
 // ---------- getRobot --> get 1 robot for full page ----------
-function getRobot (roboId) {
+function findById (roboId) {
   return Robot.find({ id: roboId }).catch(function(err) {
+    console.log(err);
+  })
+}
+
+//  ---------- find by username -------------
+function findByUsername (usrnm) {
+  return Robot.find({ username: usrnm }).catch(function(err) {
     console.log(err);
   })
 }
@@ -36,12 +43,38 @@ function getEmployed () {
   })
 }
 
+// ---------- add a robot -----------------
+function addRobot (newRobot) {
+  let robot = new Robot(newRobot)
+    robot.save(function(err){
+      console.log('addRobot err ::', err);
+    })
+    return Promise.resolve()
+} //end
+  // Robot.create({email: newEmail}, {username: newUsername}, {password: newPassword}, function(err, newRobot) {
+  //   if(err) return handleError(err)
+  // }
+//   let newRobot = new Robot({ username: newUsername });
+//   newRobot.password.push(newPassword)
+//   newRobot.email.push(newEmail)
+//   return newRobot
+// }
+
+// ---------- update a robot -----------------
+function updateRobot () {
+  return Robot.updateone({username: thisUsername},
+    {$push: {name: thisName}}     // <<======== pick up here
+  )
+}
+
 
 
 module.exports = {
   getAllRobots,
-  getRobot,
+  findById,
   getUnemployed,
   getEmployed,
-
+  findByUsername,
+  addRobot,
+  updateRobot
 }

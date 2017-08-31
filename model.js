@@ -2,7 +2,8 @@ const mongoose = require('mongoose')
 
 const RobotSchema = new mongoose.Schema({
   id: Number,
-  username: { type: String, require: true },
+  username: { type: String, unique: true, lowercase: true, require: true },
+  password: { type: String, require: true},
   name: { type: String, require: true },
   avatar: { type: String },
   email: { type: String, require: true },
@@ -17,7 +18,7 @@ const RobotSchema = new mongoose.Schema({
     city: { type: String },
     state_or_province: { type: String },
     postal_code: { type: String },
-    country: { type: String }
+    country: { type: String },
   }]
 })
 

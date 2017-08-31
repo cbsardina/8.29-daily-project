@@ -10,8 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.2",
+    "connect-mongo": "^1.3.2",
     "express": "^4.15.4",
     "express-session": "^1.15.5",
     "express-sessions": "^1.0.6",
@@ -19,6 +21,8 @@
     "mongoose": "^4.11.9",
     "mustache": "^2.3.0",
     "mustache-express": "^1.2.5",
-    "nodeman": "^1.1.2"
+    "nodeman": "^1.1.2",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0"
   }
 }
