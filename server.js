@@ -1,6 +1,7 @@
 //SERVER.JS
 
 const express = require('express')
+const morgan = require('morgan')
 const app = express();
 const bodyParser = require('body-parser')
 const mustacheExpress = require('mustache-express')
@@ -12,11 +13,15 @@ const {
   getEmployed,
   findByUsername,
   addRobot,
-  updateRobot
+  updateRobot,
+  addRoboPasswords
 } = require('./dal');
 const Robot = require('./model')
 const passport = require('passport')
 const MongoStore = require('connect-mongo')(session)
+
+//morgan
+app.use(morgan('combined'))
 
 //set up 'public' directory for styles.css
 app.use(express.static('public'));
@@ -61,7 +66,6 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // ------------- ALL ROBOTS --------------------------
 app.get('/', (req, res) => {
   getAllRobots().then(function(robos) {
-    console.log(req.session.id);
     res.render('index', {robos})
   })
 })
@@ -104,13 +108,14 @@ app.post('/register', (req, res) => {
   })
 })
 
-
 // ------------- EDIT -----------------------
 app.get('/edit_profile', (req, res) => {
-      res.render('edit_profile')
+  addRoboPasswords().then(function() {      // fix this. used to add passwords to db
+    res.redirect('/')                 // <== change back to render('/edit_profile')
+  })
 })
 
-// ----- /LOGOUT -----
+// ---------- /LOGOUT ----------
 app.get('/logout', (req, res) => {
   req.session.destroy(() => {
     res.redirect('/');
@@ -123,7 +128,6 @@ app.set('port', 3000);
 app.listen(app.get('port'), () => {
   console.log('Application has started at port 3000')
 });
-
 
 
 

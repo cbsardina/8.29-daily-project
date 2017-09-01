@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^1.0.3",
     "bcryptjs": "^2.4.3",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.2",
@@ -19,6 +20,7 @@
     "express-sessions": "^1.0.6",
     "mongodb": "^2.2.31",
     "mongoose": "^4.11.9",
+    "morgan": "^1.8.2",
     "mustache": "^2.3.0",
     "mustache-express": "^1.2.5",
     "nodeman": "^1.1.2",

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="./styles.css">
-    <title>Register</title>
+    <title>Update</title>
   </head>
   <body>
 <!-- ---------- HEADER ---------- -->
@@ -28,15 +28,15 @@
     <input type="text" name="name" placeholder="Name: First Last" value="{{name}}">
     <input type="number" name="street_num" placeholder="12345" value="{{}}">
     <input type="text" name="street_name" placeholder="Street Name" value="">
-    <input type="text" name="city" placeholder="City" value="{{address:city}}">
+    <input type="text" name="city" placeholder="City" value="{{address.city}}">
     <input type="text" name="state_or_province" placeholder="State or Province" value="">
     <input type="number" name="postal_code" placeholder="Postal Code">
-    <input type="text" name="country" placeholder="Country" value="address:country">
+    <input type="text" name="country" placeholder="Country" value="{{address.country}}">
     <input type="email" name="email" placeholder="email@email.com" value="{{email}}">
     <input type="text" name="university" placeholder="University" value="{{university}}">
     <input type="text" name="job" placeholder="Job" value="{{job}}">
     <input type="text" name="company" placeholder="Company" value="{{company}}">
-    <input type="text" name="skills" placeholder="Sill1, Skill2, Skill3, etc." value="{{skills}}">
+    <input type="text" name="skills" placeholder="Sill1, Skill2, Skill3, etc." value="{{#skills}}{{.}}{{/skills}}">
     <input type="tel" name="phone" placeholder="XXX-XXX-XXXX">
     <input type="text" name="username" placeholder="Username" value="{{username}}">
     <input type="password" name="createPassword" placeholder="Password" value="{{password}}">

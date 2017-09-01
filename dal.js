@@ -15,6 +15,7 @@ function getAllRobots () {
   //   return robots;
 }
 
+
 // ---------- getRobot --> get 1 robot for full page ----------
 function findById (roboId) {
   return Robot.find({ id: roboId }).catch(function(err) {
@@ -51,14 +52,6 @@ function addRobot (newRobot) {
     })
     return Promise.resolve()
 } //end
-  // Robot.create({email: newEmail}, {username: newUsername}, {password: newPassword}, function(err, newRobot) {
-  //   if(err) return handleError(err)
-  // }
-//   let newRobot = new Robot({ username: newUsername });
-//   newRobot.password.push(newPassword)
-//   newRobot.email.push(newEmail)
-//   return newRobot
-// }
 
 // ---------- update a robot -----------------
 function updateRobot () {
@@ -66,6 +59,33 @@ function updateRobot () {
     {$push: {name: thisName}}     // <<======== pick up here
   )
 }
+
+// TEMP add robo passwordHash
+function addRoboPasswords() {
+  console.log('enters fn addRoboPasswords.');
+  Robot.updateMany(
+    {},
+    {passwordHash: 'password123'}
+  )
+  console.log('at return of the promise.');
+  return Promise.resolve()
+}
+
+
+// function addRoboPasswords () {
+//   console.log("==========");
+//   console.log(Robot.find());
+//   console.log("==========");
+//   for(i in Robot.length){
+//     j = 5;
+//       Robot.updateOne({id: i}, { passwordHash: "'mypassword' + j" })
+//       console.log('Robot at::' [i]);
+//       console.log(Robot[i]);
+//       j++
+//   }
+//   return Promise.resolve()
+// }
+//TEMP FUNCITON WAS NOT DOING AN
 
 
 
@@ -76,5 +96,6 @@ module.exports = {
   getEmployed,
   findByUsername,
   addRobot,
-  updateRobot
+  updateRobot,
+  addRoboPasswords
 }

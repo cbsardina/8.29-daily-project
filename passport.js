@@ -15,7 +15,7 @@ passport.deserializeUser((id, done) => {
   })
 })
 
-psssport.use(new LocalStrategy((username, password, done) {
+passport.use(new LocalStrategy((username, password, done) {
   Robot.findOne({ username: username.toLowerCase() }, '+password', (
     err,
     user
