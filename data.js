@@ -11,10 +11,7 @@
     "skills":
       ["DMVPN","HDX","Rhino 3D"],
     "phone":"7-(397)813-7803",
-    "address":
-    {
-      "street_num":"78226",
-      "street_name":"Ryan",
+    "address": {"street_num":"78226", "street_name":"Ryan",
       "city":"Kamennogorsk",
       "state_or_province":null,
       "postal_code":"188950",

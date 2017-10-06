@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt')
 const RobotSchema = new mongoose.Schema({
   id: Number,
   username: { type: String, unique: true, lowercase: true, require: true },
-  passwordHash: { type: String, require: true},
+  password: { type: String, require: true},
   name: { type: String, require: true },
   avatar: { type: String },
   email: { type: String, require: true },
@@ -33,8 +33,8 @@ RobotSchema.pre('save', function (next) {
     next()
   }
   bcrypt.genSalt(saltRounds, (err, salt) => {
-    bcrypt.hash(user.passwordHash, salt, (err, hash) => {
-      user.passwordHash = hash
+    bcrypt.hash(user.password, salt, (err, hash) => {
+      user.password = hash
       user.updated_at = new Date().toISOString()
       next()
     })
@@ -60,11 +60,11 @@ module.exports = Robot
 //   .get(function () { return null })
 //   .set(function (value) {
 //     const hash = bcrypt.hashSync(value, 8)
-//     this.passwordHash = hash
+//     this.password = hash
 //   })
 //
 //   RobotSchema.methods.authenticate = function(password) {
-//     return bcrypt.compareSync(password, this.passwordHash)
+//     return bcrypt.compareSync(password, this.password)
 //   }
 //
 //   RobotSchema.statistics.authenticate = function (username, password, done) {

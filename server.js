@@ -4,6 +4,7 @@ const express = require('express')
 const morgan = require('morgan')
 const app = express();
 const bodyParser = require('body-parser')
+const { createToken } = require('.auth/')
 const mustacheExpress = require('mustache-express')
 const session = require('express-session')
 const {
@@ -123,7 +124,7 @@ app.get('/logout', (req, res) => {
 })
 
 //============ SET PORT =========================
-app.set('port', 3000);
+app.set('port', process.env.PORT || 3000);
 
 app.listen(app.get('port'), () => {
   console.log('Application has started at port 3000')
