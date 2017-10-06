@@ -1,5 +1,6 @@
-cosnt jwt = require('jsonwebtoken')
-cosnt moment = require('moment')
+const jwt = require('jsonwebtoken')
+const moment = require('moment')
+const Robot = require('./model')
 
 function createJwt(userData) {
   const payload = {
@@ -38,4 +39,4 @@ function isAuthenticated(req, res, next) {
 //make our createToken(data)
 //make our middleware that protects our endpoints/routes
 
-module.exports = {createToken, isAuthenticated}
+module.exports = {createJwt, isAuthenticated}

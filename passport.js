@@ -45,4 +45,4 @@ const isAuthenticated = (req, res, next) => {
   res.redirect('/login')
 }
 
-module.exports = {isAuthenticated}
+// module.exports = {isAuthenticated}

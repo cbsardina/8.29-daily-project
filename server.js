@@ -4,7 +4,7 @@ const express = require('express')
 const morgan = require('morgan')
 const app = express();
 const bodyParser = require('body-parser')
-const { createToken } = require('.auth/')
+const { createJwt, isAuthenticated } = require('./auth')
 const mustacheExpress = require('mustache-express')
 const session = require('express-session')
 const {
@@ -18,7 +18,7 @@ const {
   addRoboPasswords
 } = require('./dal');
 const Robot = require('./model')
-const passport = require('passport')
+// const passport = require('passport')
 const MongoStore = require('connect-mongo')(session)
 
 //morgan
@@ -39,8 +39,8 @@ app.use(
       clear_interval: 4000
     })
   }))
-app.use(passport.initialize())
-app.use(passport.session())
+// app.use(passport.initialize())
+// app.use(passport.session())
 
 // Register '.mustache' extension with The Mustache Express
 app.engine('mustache', mustacheExpress());
@@ -127,7 +127,7 @@ app.get('/logout', (req, res) => {
 app.set('port', process.env.PORT || 3000);
 
 app.listen(app.get('port'), () => {
-  console.log('Application has started at port 3000')
+  console.log(`Application has started on port ${app.get('port')}`)
 });
 
 

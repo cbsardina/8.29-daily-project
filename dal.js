@@ -54,11 +54,40 @@ function addRobot (newRobot) {
 } //end
 
 // ---------- update a robot -----------------
-function updateRobot () {
-  return Robot.updateone({username: thisUsername},
-    {$push: {name: thisName}}     // <<======== pick up here
-  )
+function updateRobot (paramsId, bodyUsername, bodyName, bodyAvatar, bodyEmail, bodyUniversity, bodyJob, bodyCompany, bodySkills, bodyPhone, bodyStreetNum, bodyStreetName, bodyCity, bodyStateProv, bodyPostCode, bodyCounty ) {
+  Robot.findOneAndUpdate({_id:paramsId},
+        {$set:{"name": bodyName,
+               "avatar": bodyAvatar,
+               "email": bodyEmail,
+               "university": bodyUniversity,
+               "job": bodyJob,
+               "company": bodyCompany,
+               "skills": [bodySkills],
+               "phone": bodyPhone,
+               "address": {
+                 "street_num": bodyStreetNum,
+                 "street_name": bodyStreetName,
+                 "city": bodyCity,
+                 "state_or_province": bodyStateProv,
+                 "postal_code": bodyPostCode,
+                 "country": bodyCounty}
+        }},
+        {new: false}, function (err, doc) {
+          if (err) {
+            console.log("ERRORY UPDATING THE DOC: ", err)
+          }
+          console.log("Updated doc: ", doc)
+        })
 }
+
+
+
+
+
+
+
+
+
 
 // TEMP add robo passwordHash
 function addRoboPasswords() {

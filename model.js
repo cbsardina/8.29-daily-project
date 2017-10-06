@@ -23,8 +23,6 @@ const RobotSchema = new mongoose.Schema({
   }]
 })
 
-
-
 const saltRounds = 10;
 
 RobotSchema.pre('save', function (next) {
