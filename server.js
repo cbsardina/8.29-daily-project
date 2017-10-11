@@ -1,7 +1,7 @@
 //SERVER.JS
 
 const express = require('express')
-const morgan = require('morgan')
+// const morgan = require('morgan')
 const app = express();
 const bodyParser = require('body-parser')
 const { createJwt, isAuthenticated } = require('./auth')
@@ -14,15 +14,14 @@ const {
   getEmployed,
   findByUsername,
   addRobot,
-  updateRobot,
-  addRoboPasswords
+  updateRobot
 } = require('./dal');
 const Robot = require('./model')
 // const passport = require('passport')
 const MongoStore = require('connect-mongo')(session)
 
 //morgan
-app.use(morgan('combined'))
+// app.use(morgan('combined'))
 
 //set up 'public' directory for styles.css
 app.use(express.static('public'));
@@ -64,16 +63,16 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 //============== ROUTES ========================
 
-// ------------- ALL ROBOTS --------------------------
+// ------------- ALL ROBOTS --------------------
 app.get('/', (req, res) => {
   getAllRobots().then(function(robos) {
     res.render('index', {robos})
   })
 })
 
-// ------------ FULL ROBOT PROFILE ------------------------
-app.get('/index/:id', (req, res) => {
-  const roboId = parseInt(req.params.id, 10)
+// ------------ FULL ROBOT PROFILE -------------
+app.get('/index/:_id', (req, res) => {
+  const roboId = req.params._id
   findById(roboId).then(function(aRobot) {
     res.render('oneRobo', aRobot[0])
   })
@@ -86,7 +85,7 @@ app.get('/job_seekers', (req, res) => {
   })
 })
 
-// ------------- EMPLOYED -----------------------
+// ------------- EMPLOYED ---------------------
 app.get('/employed', (req, res) => {
   getEmployed().then(function(roboEmp) {
       res.render('employed', {roboEmp});
@@ -98,22 +97,30 @@ app.get('/login', (req, res) => {
   res.render('login');
 })
 
-// ------------- REGISTER/ADD -----------------------
+// ------------- REGISTER/ADD -----------------
 app.get('/register', (req, res) => {
   res.render('register');
 })
 
 app.post('/register', (req, res) => {
   addRobot(req.body).then(function() {
-    res.render('edit_profile')
+    res.redirect('/index')
   })
 })
 
 // ------------- EDIT -----------------------
-app.get('/edit_profile', (req, res) => {
-  addRoboPasswords().then(function() {      // fix this. used to add passwords to db
-    res.redirect('/')                 // <== change back to render('/edit_profile')
+
+app.get('/edit_profile/:_id', (req, res) => {
+  const roboId = req.params._id
+  findById(roboId).then(function(eRobot) {
+    res.render('edit_profile', eRobot[0])
   })
+})
+app.post('/edit_profile/:_id', (req, res) => {
+  const r = req.body
+  console.log("Check req.body" + r.name)
+  updateRobot(req.params._id, r.name, r.avatar, r.email, r.university, r.job, r.company, r.skills, r.phone, r.street_num, r.street_name, r.city, r.state_or_province, r.postal_code, r.country)
+    res.redirect('/')
 })
 
 // ---------- /LOGOUT ----------

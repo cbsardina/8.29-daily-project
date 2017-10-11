@@ -11,14 +11,11 @@ mongoose.connect('mongodb://localhost:27017/robotdb', {
 // ---------- getRobots from DB ----------
 function getAllRobots () {
   return Robot.find()
-  // getRobots(url)
-  //   return robots;
 }
-
 
 // ---------- getRobot --> get 1 robot for full page ----------
 function findById (roboId) {
-  return Robot.find({ id: roboId }).catch(function(err) {
+  return Robot.find({ _id: roboId }).catch(function(err) {
     console.log(err);
   })
 }
@@ -54,7 +51,7 @@ function addRobot (newRobot) {
 } //end
 
 // ---------- update a robot -----------------
-function updateRobot (paramsId, bodyUsername, bodyName, bodyAvatar, bodyEmail, bodyUniversity, bodyJob, bodyCompany, bodySkills, bodyPhone, bodyStreetNum, bodyStreetName, bodyCity, bodyStateProv, bodyPostCode, bodyCounty ) {
+function updateRobot (paramsId, bodyName, bodyAvatar, bodyEmail, bodyUniversity, bodyJob, bodyCompany, bodySkills, bodyPhone, bodyStreetNum, bodyStreetName, bodyCity, bodyStateProv, bodyPostCode, bodyCountry ) {
   Robot.findOneAndUpdate({_id:paramsId},
         {$set:{"name": bodyName,
                "avatar": bodyAvatar,
@@ -70,53 +67,15 @@ function updateRobot (paramsId, bodyUsername, bodyName, bodyAvatar, bodyEmail, b
                  "city": bodyCity,
                  "state_or_province": bodyStateProv,
                  "postal_code": bodyPostCode,
-                 "country": bodyCounty}
+                 "country": bodyCountry}
         }},
         {new: false}, function (err, doc) {
           if (err) {
-            console.log("ERRORY UPDATING THE DOC: ", err)
+            console.log("ERRORY UPDATING THE DOC")
           }
-          console.log("Updated doc: ", doc)
+          console.log(doc)
         })
 }
-
-
-
-
-
-
-
-
-
-
-// TEMP add robo passwordHash
-function addRoboPasswords() {
-  console.log('enters fn addRoboPasswords.');
-  Robot.updateMany(
-    {},
-    {passwordHash: 'password123'}
-  )
-  console.log('at return of the promise.');
-  return Promise.resolve()
-}
-
-
-// function addRoboPasswords () {
-//   console.log("==========");
-//   console.log(Robot.find());
-//   console.log("==========");
-//   for(i in Robot.length){
-//     j = 5;
-//       Robot.updateOne({id: i}, { passwordHash: "'mypassword' + j" })
-//       console.log('Robot at::' [i]);
-//       console.log(Robot[i]);
-//       j++
-//   }
-//   return Promise.resolve()
-// }
-//TEMP FUNCITON WAS NOT DOING AN
-
-
 
 module.exports = {
   getAllRobots,
@@ -125,6 +84,5 @@ module.exports = {
   getEmployed,
   findByUsername,
   addRobot,
-  updateRobot,
-  addRoboPasswords
+  updateRobot
 }

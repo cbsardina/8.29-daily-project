@@ -96,7 +96,7 @@ header ul {
   margin-top: 0;
 }
 
-/*FOR REGISTER PAGE*/
+/*---------- FOR REGISTER PAGE ----------*/
 .signupSection {
   margin: 1em auto;
   width: 80%;
@@ -139,8 +139,8 @@ input {
   width: 30%;
 }
 
-/*-------- BUTTON ----------*/
-button {
+/*-------- BUTTON & EDIT BUTTON----------*/
+button, .editButton {
   font-size: 1.25em;
   color: #fff;
   background-color: #69809E;
@@ -148,16 +148,17 @@ button {
   padding: .5em .75em;
   border-radius: 10px;
 }
-button:focus {
+button:focus, .editButton:focus {
   outline: none;
 }
-button:hover {
+button:hover, .editButton:hover {
   background-color: #D3D9E1;
   color: #000;
 }
-button:active {
+button:active, .editButton:active {
   background-color: green;
 }
+
 
 
 
