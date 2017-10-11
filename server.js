@@ -103,9 +103,9 @@ app.get('/register', (req, res) => {
 })
 
 app.post('/register', (req, res) => {
-  addRobot(req.body).then(function() {
-    res.redirect('/index')
-  })
+  const r = req.body
+  addRobot(r.email, r.name, r.username, r.password)
+    res.redirect('/login')
 })
 
 // ------------- EDIT -----------------------

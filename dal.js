@@ -42,12 +42,17 @@ function getEmployed () {
 }
 
 // ---------- add a robot -----------------
-function addRobot (newRobot) {
-  let robot = new Robot(newRobot)
-    robot.save(function(err){
-      console.log('addRobot err ::', err);
-    })
-    return Promise.resolve()
+function addRobot (nEmail, nName, nUserName, nPassword) {
+  Robot.create({email: nEmail,
+                name: nName,
+                username: nUserName,
+                password: nPassword}),
+        function(err, doc) {
+          if(err) {
+            console.log("ERROR ADDING THE DATA")
+          }
+          console.log(doc)
+        }
 } //end
 
 // ---------- update a robot -----------------
