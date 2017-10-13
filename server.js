@@ -87,19 +87,19 @@ app.get('/login', (req, res) => {
 })
 
 app.post('/login', (req, res) => {
-  findByUsername(req.body.username).then(function (err, user, next) {
+  Robot.findOne({username: req.body.username}, '+password', function (err, user, next) {
     if (err) {
       return next(err)
     }
-    if(!user) {
-      return res.status(401)
+    if (!user) {
+      return res.status(401).send({message: 'Incorrect username and/or password'})
     }
-    user.comparePassword(req.body.password, user.password, function(err, isMatch) {
-      console.log('Passwords Match', isMatch)
+    user.comparePassword(req.body.password, user.password, function (err, isMatch) {
+      console.log('Password matches', isMatch)
       if (!isMatch) {
-        return res.status(401)
+        return res.status(401).send({message: 'Incorrect username and/or password'})
       }
-      req.session.jwToken = createToken(user)
+      res.send({token: createToken(user)})
     })
   })
   res.redirect('/')
