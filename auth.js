@@ -10,7 +10,7 @@ function createJwt(userData) {
     username: userData.username,
     name: userData.name
   }
-  return jwt.sign(payload, process.env.TOKEN_SECRET)
+  return jwt.sign(payload, process.env.TOKEN_SECRET || 'puppy monkey baby')
 } // end createJwt()
 
 function isAuthenticated(req, res, next) {
@@ -36,7 +36,5 @@ function isAuthenticated(req, res, next) {
     next(error)
   }
 }
-//make our createToken(data)
-//make our middleware that protects our endpoints/routes
 
 module.exports = {createJwt, isAuthenticated}

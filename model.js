@@ -49,32 +49,3 @@ RobotSchema.methods.comparePassword = (password, dbPass, done) => {
 
 const Robot = mongoose.model('Robot', RobotSchema)
 module.exports = Robot
-
-
-
-
-
-// RobotSchema.virtual('password')
-//   .get(function () { return null })
-//   .set(function (value) {
-//     const hash = bcrypt.hashSync(value, 8)
-//     this.password = hash
-//   })
-//
-//   RobotSchema.methods.authenticate = function(password) {
-//     return bcrypt.compareSync(password, this.password)
-//   }
-//
-//   RobotSchema.statistics.authenticate = function (username, password, done) {
-//     this.findOne({
-//       username: username
-//     }, function (err, user) {
-//       if (err) {
-//         done(err, false)
-//       } else if (user && user.authenticate(password)) {
-//         done (null, user)
-//       } else {
-//         done (null, false)
-//       }
-//     })
-//   }

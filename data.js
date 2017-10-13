@@ -5,7 +5,7 @@
     "name":"Hamlen Juza",
     "avatar":"https://robohash.org/blanditiisexercitationemquaerat.png?size=150x150&set=set1",
     "email":"hjuza0@blogger.com",
-    "university":"Pomor State University",
+    "university":"Pomor State University" ,
     "job":"Engineer IV",
     "company":"Stark, Feil and Bode",
     "skills":

@@ -50,17 +50,6 @@ app.set('views', __dirname + '/views');
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
-// verify login
-// function isLoggedIn(req, res, next) {
-//   if(req.session.usr) {
-//     next();
-//   }
-//   else {
-//     res.render('sorry');
-//   }
-// }
-
-
 //============== ROUTES ========================
 
 // ------------- ALL ROBOTS --------------------
@@ -71,7 +60,7 @@ app.get('/', (req, res) => {
 })
 
 // ------------ FULL ROBOT PROFILE -------------
-app.get('/index/:_id', (req, res) => {
+app.get('/index/:_id', isAuthenticated, (req, res) => {
   const roboId = req.params._id
   findById(roboId).then(function(aRobot) {
     res.render('oneRobo', aRobot[0])
@@ -97,6 +86,25 @@ app.get('/login', (req, res) => {
   res.render('login');
 })
 
+app.post('/login', (req, res) => {
+  findByUsername(req.body.username).then(function (err, user, next) {
+    if (err) {
+      return next(err)
+    }
+    if(!user) {
+      return res.status(401)
+    }
+    user.comparePassword(req.body.password, user.password, function(err, isMatch) {
+      console.log('Passwords Match', isMatch)
+      if (!isMatch) {
+        return res.status(401)
+      }
+      req.session.jwToken = createToken(user)
+    })
+  })
+  res.redirect('/')
+})
+
 // ------------- REGISTER/ADD -----------------
 app.get('/register', (req, res) => {
   res.render('register');
@@ -110,13 +118,13 @@ app.post('/register', (req, res) => {
 
 // ------------- EDIT -----------------------
 
-app.get('/edit_profile/:_id', (req, res) => {
+app.get('/edit_profile/:_id', isAuthenticated, (req, res) => {
   const roboId = req.params._id
   findById(roboId).then(function(eRobot) {
     res.render('edit_profile', eRobot[0])
   })
 })
-app.post('/edit_profile/:_id', (req, res) => {
+app.post('/edit_profile/:_id', isAuthenticated, (req, res) => {
   const r = req.body
   console.log("Check req.body" + r.name)
   updateRobot(req.params._id, r.name, r.avatar, r.email, r.university, r.job, r.company, r.skills, r.phone, r.street_num, r.street_name, r.city, r.state_or_province, r.postal_code, r.country)
@@ -136,20 +144,3 @@ app.set('port', process.env.PORT || 3000);
 app.listen(app.get('port'), () => {
   console.log(`Application has started on port ${app.get('port')}`)
 });
-
-
-
-// ================== NOT BEING USED========================
-//
-// // ------------- FIND by COUNTRY --------------------
-// app.get('/index/:country', function (request, response) {
-//   const roboCountry = roboDal.getRoboByCountry(request.params.country);
-//     response.render('country', {roboCountry})
-// })
-//
-// // -------------- FIND by SKILLS --------------------
-// app.get('/skills/:.', function (request, response) {
-//   const roboSkills = roboDal.getRoboBySkill(request.params.skills);
-//     response.render('skills', {roboSkills})
-// })
-// ^^^^^^^^^^^^^^^^^ NOT BEING USED ^^^^^^^^^^^^^^^^^^^^^^^^^^

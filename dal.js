@@ -80,7 +80,8 @@ function updateRobot (paramsId, bodyName, bodyAvatar, bodyEmail, bodyUniversity,
           }
           console.log(doc)
         })
-}
+} // -- end updateRobot ---
+
 
 module.exports = {
   getAllRobots,
